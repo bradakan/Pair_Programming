@@ -2,6 +2,7 @@ package factories
 {
 	import adobe.utils.CustomActions;
 	import components.DisplayComponent;
+	import components.MoveToTargetComponent;
 	import components.PositionComponent;
 	import components.RotateToTargetComponent;
 	import components.VelocityComponent;
@@ -37,6 +38,7 @@ package factories
 			var rotatePoint	:   RotateToTargetComponent = new RotateToTargetComponent();
 			rotatePoint.lookToMouse = true;
 			rotatePoint.lookTarget = null;
+			
 			
 			// als laatste maken we onze entity aan
 			// de entity bestaat uit componenten.

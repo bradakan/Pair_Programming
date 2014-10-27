@@ -22,13 +22,14 @@ package systems
 			{
 				if (target.get(PositionComponent) && target.get(RotateToTargetComponent))
 				{
+					
 					var x:Number,
 						y:Number,
 						rotationInRadians:Number;
 					if (target.get(RotateToTargetComponent).lookToMouse)
 					{
 						x = target.get(PositionComponent).x - _stage.mouseX;
-						y = target.get(PositionComponent).y - _stage.mouseX;
+						y = target.get(PositionComponent).y - _stage.mouseY;
 					} else {
 						x = target.get(RotateToTargetComponent).lookTarget.get(PositionComponent).x;
 						y = target.get(RotateToTargetComponent).lookTarget.get(PositionComponent).y;

@@ -7,7 +7,7 @@ package components
 	 */
 	public class RotateToTargetComponent 
 	{
-		public var lookTarget:Entity;
+		public var lookTarget:Point;
 		public var lookToMouse:Boolean;
 	}
 
