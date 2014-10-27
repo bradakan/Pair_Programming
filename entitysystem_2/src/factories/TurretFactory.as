@@ -3,6 +3,7 @@ package factories
 	import adobe.utils.CustomActions;
 	import components.DisplayComponent;
 	import components.PositionComponent;
+	import components.RotateToTargetComponent;
 	import components.VelocityComponent;
 	/**
 	 * ...
@@ -18,7 +19,7 @@ package factories
 			
 		}
 		
-		public  function makeTurret(type : String) : Entity
+		public  function makeTurret(type : String, x : Number, y : Number) : Entity
 		{
 			
 			// we maken de componenten aan. Hier kan het systeem zijn 'data' in opslaan
@@ -30,9 +31,12 @@ package factories
 			}
 			
 			var position	:	PositionComponent	=	new PositionComponent();
-			position.x								=	Math.random() * 600;
-			position.y								=	200;
+			position.x								=	x;
+			position.y								=	y;
 			
+			var rotatePoint	:   RotateToTargetComponent = new RotateToTargetComponent();
+			rotatePoint.lookToMouse = true;
+			rotatePoint.lookTarget = null;
 			
 			// als laatste maken we onze entity aan
 			// de entity bestaat uit componenten.
@@ -42,6 +46,8 @@ package factories
 			// hiermee bepalen we het gedrag van deze entity
 			turret.add(display);
 			turret.add(position);
+			turret.add(rotatePoint);
+
 			
 			
 			return turret;

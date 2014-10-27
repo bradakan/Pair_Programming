@@ -6,6 +6,7 @@
 	import components.PositionComponent;
 	import components.VelocityComponent;
 	import factories.CarFactory;
+	import factories.TurretFactory;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -14,6 +15,7 @@
 	import systems.GravitySystem;
 	import systems.MovementSystem;
 	import systems.RenderSystem;
+	import systems.RotateToTargetSystem;
 
 	public class Main extends Sprite
 	{
@@ -30,43 +32,44 @@
 			_engine.addSystem(new GravitySystem());
 			_engine.addSystem(new MovementSystem());
 			_engine.addSystem(new CollisionSystem());
-			_engine.addSystem(new RenderSystem());			
+			_engine.addSystem(new RenderSystem());	
+			_engine.addSystem(new RotateToTargetSystem(stage));
 			
 			// de wereld willen we ook als Entity hebben
 			var world : Entity = new Entity();
 			
 			var worldPosition : PositionComponent = new PositionComponent();
 			worldPosition.x = 0;
-			worldPosition.y = 300;
+			worldPosition.y = 400;
 			
 			var worldDisplay	: DisplayComponent = new DisplayComponent();
-			worldDisplay.view = new landscape();
+			worldDisplay.view = new Landscape();
 			
 			world.add(worldPosition);
 			world.add(worldDisplay);
+			// laat de auto ook visueel zien
+			// we voegen hem toe aan de stage
+			addChild(world.get(DisplayComponent).view);
 			
 			// we hebben 1 component nodig die door alle objecten gebruikt kan worden
 			// deze component bevat een verwijzing naar de wereld
 			var collision : CollisionComponent = new CollisionComponent();
 			collision.world	=	world;
 			
-			var carFactory	:	CarFactory	=	new CarFactory();
+			var turretFactory	:	TurretFactory	=	new TurretFactory();
 			
-			for (var i : int = 0; i < 10; i++)
+			for (var i : int = 0; i < 3; i++)
 			{
-				var car : Entity	=	carFactory.makeCar(CarFactory.SPORTSCAR);
-				car.add(collision);
-				addChild(car.get(DisplayComponent).view);
+				var x:Number = 100 + i * 250,
+					y:Number = 500,
+					turret : Entity	=	turretFactory.makeTurret(TurretFactory.NORMALTURRET, x, y);
+				//turret.add(collision);
+				addChild(turret.get(DisplayComponent).view);
 				// registreer de auto bij de engine zodat de game ook gaat werken
-				_engine.addEntity(car);
+				_engine.addEntity(turret);
 			}
 			
-			
 			_engine.addEntity(world);
-			
-			// laat de auto ook visueel zien
-			// we voegen hem toe aan de stage
-			addChild(world.get(DisplayComponent).view);
 			
 			// start het updaten van het spel
 			stage.addEventListener(Event.ENTER_FRAME, updateEngine);
