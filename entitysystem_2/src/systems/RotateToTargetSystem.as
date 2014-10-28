@@ -31,8 +31,8 @@ package systems
 						x = target.get(PositionComponent).x - _stage.mouseX;
 						y = target.get(PositionComponent).y - _stage.mouseY;
 					} else {
-						x = target.get(RotateToTargetComponent).lookTarget.get(PositionComponent).x;
-						y = target.get(RotateToTargetComponent).lookTarget.get(PositionComponent).y;
+						x = target.get(PositionComponent).x - target.get(RotateToTargetComponent).lookTarget.x;
+						y = target.get(PositionComponent).y - target.get(RotateToTargetComponent).lookTarget.y;
 					}
 					rotationInRadians = Math.atan2(x, y);
 					target.get(PositionComponent).rotation =  -rotationInRadians * (180 / Math.PI);

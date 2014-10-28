@@ -19,6 +19,5 @@ package systems {
 		public function set targets(targets : Vector.<Entity>) : void {
 			_targets = targets;
 		}
-		
 	}
 }

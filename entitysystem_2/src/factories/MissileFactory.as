@@ -33,9 +33,13 @@ package factories
 			rotateToTarget.lookTarget 				= 	new Point(targetX, targetY);
 			rotateToTarget.lookToMouse 				=	false;
 			
+			/*
 			var movePoint : MoveToTargetComponent = new MoveToTargetComponent();
 			movePoint.targetX = targetX;
 			movePoint.targetY = targetY;
+			movePoint.speed = 3;
+			*/
+			
 			// als laatste maken we onze entity aan
 			// de entity bestaat uit componenten.
 			var missile	:	Entity						=	new Entity();
@@ -46,9 +50,7 @@ package factories
 			missile.add(position);
 			missile.add(velocity);
 			missile.add(rotateToTarget);
-			missile.add(movePoint);
-			
-			
+			//missile.add(movePoint);
 			
 			return missile;
 		}

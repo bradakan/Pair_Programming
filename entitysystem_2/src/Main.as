@@ -5,7 +5,9 @@
 	import components.DisplayComponent;
 	import components.PositionComponent;
 	import components.VelocityComponent;
+	import components.ShootComponent;
 	import factories.CarFactory;
+	import factories.MissileFactory;
 	import factories.TurretFactory;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
@@ -14,9 +16,9 @@
 	import systems.CollisionSystem;
 	import systems.GravitySystem;
 	import systems.MovementSystem;
+	import systems.MoveToTargetSystem;
 	import systems.RenderSystem;
 	import systems.RotateToTargetSystem;
-
 	public class Main extends Sprite
 	{
 		private var _engine	:	Engine;
@@ -29,11 +31,12 @@
 			
 			// vervolgens initieren wij de systemen
 			// dit doen we door ze toe te voegen aan de engine
-			_engine.addSystem(new GravitySystem());
-			_engine.addSystem(new MovementSystem());
-			_engine.addSystem(new CollisionSystem());
+			//_engine.addSystem(new GravitySystem());
+			//_engine.addSystem(new MovementSystem());
+			//_engine.addSystem(new CollisionSystem());
 			_engine.addSystem(new RenderSystem());	
 			_engine.addSystem(new RotateToTargetSystem(stage));
+			_engine.addSystem(new MoveToTargetSystem());
 			
 			// de wereld willen we ook als Entity hebben
 			var world : Entity = new Entity();
@@ -73,12 +76,35 @@
 			
 			// start het updaten van het spel
 			stage.addEventListener(Event.ENTER_FRAME, updateEngine);
-			
+			// kijk of er geklikt word in de stage
+			stage.addEventListener(MouseEvent.CLICK, onClick);
 		}
 
 		private function updateEngine(e : Event) : void
 		{
 			_engine.update();
+		}
+		private function onClick(e : MouseEvent) : void
+		{
+			var tempTargets:Vector.<Entity> = new Vector.<Entity>,
+				random:int,
+				x:Number,
+				y:Number,
+				missileFactory:MissileFactory = new MissileFactory(),
+				radian:Number;
+			for each (var target:Entity in _engine.entities) 
+			{
+				if (target.get(ShootComponent)) 
+				{
+					tempTargets.push(target);
+				}
+			}
+			random = Math.random() * tempTargets.length;
+			x = tempTargets[random].get(PositionComponent).x;
+			y = tempTargets[random].get(PositionComponent).y;
+			var missile:Entity = missileFactory.makeMissile(MissileFactory.PLAYER_MISSILE, stage.mouseX, stage.mouseY, x, y);
+			addChild(missile.get(DisplayComponent).view);
+			_engine.addEntity(missile);
 		}
 	}
 }

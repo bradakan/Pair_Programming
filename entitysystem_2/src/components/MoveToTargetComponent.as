@@ -9,7 +9,7 @@ package components
 		
 		public var targetX:Number;
 		public var targetY:Number;
-		
+		public var speed:Number;
 	}
 
 }

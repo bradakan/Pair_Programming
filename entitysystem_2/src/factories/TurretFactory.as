@@ -5,6 +5,7 @@ package factories
 	import components.MoveToTargetComponent;
 	import components.PositionComponent;
 	import components.RotateToTargetComponent;
+	import components.ShootComponent;
 	import components.VelocityComponent;
 	/**
 	 * ...
@@ -15,10 +16,6 @@ package factories
 		
 		public static var NORMALTURRET	:	String	=	"normalturret";
 		
-		public function TurretFactory() 
-		{
-			
-		}
 		
 		public  function makeTurret(type : String, x : Number, y : Number) : Entity
 		{
@@ -39,6 +36,7 @@ package factories
 			rotatePoint.lookToMouse = true;
 			rotatePoint.lookTarget = null;
 			
+			var shooter		:   ShootComponent = new ShootComponent();
 			
 			// als laatste maken we onze entity aan
 			// de entity bestaat uit componenten.
@@ -49,6 +47,7 @@ package factories
 			turret.add(display);
 			turret.add(position);
 			turret.add(rotatePoint);
+			turret.add(shooter);
 
 			
 			

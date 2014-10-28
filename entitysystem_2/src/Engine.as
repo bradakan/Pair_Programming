@@ -43,5 +43,10 @@ package {
 			}
 		}
 		
+		public function get entities():Vector.<Entity> 
+		{
+			return _entities;
+		}
+		
 	}
 }
